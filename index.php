@@ -5,5 +5,6 @@
 </head>
 <body>
 <?php echo "Hello world !"?>
+<?php echo "GeoDDSquizz"?>
 </body>
 </html>
