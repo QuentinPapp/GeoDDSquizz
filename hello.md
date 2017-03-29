@@ -1,6 +1,6 @@
-test de la résolutuion des conflit coté master
+test de la résolutuion des conflit coté test
 
-1
+4
 
 2
 
