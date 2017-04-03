@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	padding-bottom: 0;
+	background-color: red;
 }
 
 #root {
@@ -17,8 +18,4 @@ body {
 
 section {
 	background-color: green;
-}
-
-input:focus {
-	outline: 0;
 }
