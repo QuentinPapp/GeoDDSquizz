@@ -7,10 +7,10 @@ export default class Body extends React.Component {
 
 	render() {
 		return (
-			<article>
+			<section id="main">
 				<Question />
 				<Resultat />
-			</article>
+			</section>
 		);
 	}
 }

@@ -1,7 +1,6 @@
 body {
 	margin: 0;
 	padding-bottom: 0;
-	background-color: red;
 }
 
 #root {
@@ -16,6 +15,11 @@ body {
 	color: #263238;
 }
 
-section {
+#question {
+	background-color: grey;
+}
+
+#main {
+	display: flex;
 	background-color: green;
 }
