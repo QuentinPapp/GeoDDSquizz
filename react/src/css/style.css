@@ -4,22 +4,33 @@ body {
 }
 
 #root {
-	display: flex;
-	justify-content: center;
-	min-height: 100vh;
-	align-items: center;
-
+	margin-top: 7%;
 	background-color: blue;
 	font-size: 50px;
 	font-family: monospace;
 	color: #263238;
 }
 
-#question {
-	background-color: grey;
+
+.result {
+	background-color: green;
 }
 
+.question {
+	background-color: red;
+}
+
+.question button, .result button {
+	width: 10%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	width: 35%;
+	border-radius: 10px;
+}
 #main {
 	display: flex;
-	background-color: green;
+	justify-content: space-around;
 }
