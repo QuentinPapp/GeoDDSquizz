@@ -1,8 +1,9 @@
-import React from "react";
-import ReactDom from "react-dom";
-import './css/style.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Layout from './Layout';
+// import './index.css';
 
-
-import Layout from "./components/Layout";
-
-ReactDom.render(<Layout />, document.getElementById("root"));
+ReactDOM.render(
+  <Layout />,
+  document.getElementById('root')
+);

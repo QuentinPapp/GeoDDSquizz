@@ -1,36 +1,27 @@
 body {
-	margin: 0;
-	padding-bottom: 0;
+	/*background-color: grey;*/
+	background-image: url('subway-lines.png');
 }
 
-#root {
-	margin-top: 7%;
-	background-color: blue;
-	font-size: 50px;
-	font-family: monospace;
-	color: #263238;
-}
-
-
-.result {
-	background-color: green;
-}
-
-.question {
-	background-color: red;
-}
-
-.question button, .result button {
-	width: 10%;
-}
-
-.content {
-	display: flex;
-	flex-direction: column;
-	width: 35%;
+/*questions + réponses*/
+.common {
+	padding: 2%;
+	width: 80%;
+	margin : auto;
+	margin-top: 5%;
+	background-color: white;
 	border-radius: 10px;
 }
-#main {
+
+/*questions*/
+.content {
 	display: flex;
-	justify-content: space-around;
+	/*background-color: #87CEEB;*/
+	flex-direction: column;
+
+}
+
+/*réponses*/
+.result {
+	/*background-color: #E0FFFF;*/
 }
