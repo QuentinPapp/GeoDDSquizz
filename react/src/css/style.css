@@ -18,13 +18,18 @@ body {
 }
 
 /*questions*/
-.content {
+form {
 	display: flex;
 	flex-direction: column;
-
 }
 
 /*réponses*/
 .result {
 	/*background-color: #E0FFFF;*/
+}
+
+/*boutons valider/suivant*/
+.button {
+	display: flex;
+	justify-content: flex-end;
 }
