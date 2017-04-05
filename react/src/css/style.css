@@ -9,14 +9,16 @@ body {
 	width: 80%;
 	margin : auto;
 	margin-top: 5%;
+	background-color: #696969;
 	background-color: white;
 	border-radius: 10px;
+	opacity: 1;
+	box-shadow: 10px 10px 10px #A9A9A9;
 }
 
 /*questions*/
 .content {
 	display: flex;
-	/*background-color: #87CEEB;*/
 	flex-direction: column;
 
 }
