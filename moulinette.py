@@ -12,16 +12,16 @@ app = Flask(__name__)
 
 dbcon = psycopg2.connect('host=vps338664.ovh.net port=5432 dbname=geoquizz user=geodds password=acsdds')
 
-def mauvaises_rep(data, br):
+def mauvaises_rep(colonne, br):
 	try:
 		dbcur = dbcon.cursor()
-		dbcur.execute("SELECT " + data + " FROM departement WHERE " + data + " <> '" + br + "' ORDER BY random() LIMIT 3")
-		#dbcur.execute("SELECT " + data + " FROM departement WHERE " + data + " <> '" + br + "' ORDER BY random() LIMIT 2")
-		#SELECT nom_region FROM departement WHERE nom_region <> 'bourgogne' ORDER BY random() LIMIT 2;
+		dbcur.execute("SELECT " + colonne + " FROM departement WHERE " + colonne + " <> '" + br + "' ORDER BY random() LIMIT 3")
+		#dbcur.execute("SELECT prefecture FROM departement WHERE prefecture <> ' avignon ' ORDER BY random() LIMIT 2")
+		#SELECT prefecture FROM departement WHERE prefecture <> 'Avignon' ORDER BY random() LIMIT 3;
 		mauvaises_reponses = dbcur.fetchall()
-		# str(mauvaises_reponses) = "[('Pays de la Loire',), ('Nord-Pas-de-Calais',)]"
+		# str(mauvaises_reponses) = [ "Orne, Rh\u00f4ne, Bouches-du-Rh\u00f4ne" ]
 		#["bourgogne","FC"]
-		return str(mauvaises_reponses[0][0] + '", "' + str(mauvaises_reponses[1][0]) + '" , "' + str(mauvaises_reponses[2][0])) #[('Carcassonne',), ('Amiens',)]
+		return [str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]), str(mauvaises_reponses[2][0])]
 
 	except:
 		return "La fonction mauvaises_rep ne fonctionne pas"
@@ -37,15 +37,10 @@ def moulinette():
 		moulinette = []
 		questions = {}
 		for data in datas:
-
 			modeles = {
 			0 :[{
-
 			"question" : 'Quel est le numéro du département ' + data[3] + ' ?',
 			"propositions" : mauvaises_rep("num_departement", data[2]),
-			#on doit générer 2 propositions à l'aide d'une requête
-			#les propositions doivent être différentes de la réponse
-			#
 			"reponse" : str(data[2])
 			}],
 			1 :[{
