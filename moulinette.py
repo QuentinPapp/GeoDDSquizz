@@ -7,6 +7,7 @@ from flask_cors import CORS, cross_origin
 import json
 from random import randrange
 import psycopg2
+import random
 
 app = Flask(__name__)
 CORS(app)
@@ -68,30 +69,45 @@ modeles = {
 
 dbcon = psycopg2.connect('host=vps338664.ovh.net port=5432 dbname=geoquizz user=geodds password=acsdds')
 dbcur = dbcon.cursor()
+dbcur.execute("CREATE TEMP TABLE departement AS SELECT DISTINCT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM test")
 
 def mauvaises_rep(colonne, br):
 
 	try:
-		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 3", [br])
+		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 2", [br])
 		#SELECT DISTINCT nom_region, random() FROM departement WHERE nom_region <> 'Bretagne' ORDER BY random() LIMIT 3;
 		mauvaises_reponses = dbcur.fetchall()
-		return [str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]), str(mauvaises_reponses[2][0])]
+		return rand_rep(str(br), str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]))
 	
 	except Exception as e:
 		print e.message, e.args
+		return ""
 
-def check (reponse_user, reponse):
+def rand_rep(br, prop1, prop2):
 
 	try:
-		return reponse_user
+		# recuperer les 3 propositions dans un tab
+		tab = [br, prop1, prop2]
+		 # melanger le tab
+		random.shuffle(tab)
+		# retourner les propositions
+		return tab
+
 	except Exception as e:
 		print e.message, e.args
+		return ""
+
+# def check (reponse_user, reponse):
+
+# 	try:
+# 		return reponse_user 
+# 	except Exception as e:
+# 		print e.message, e.args
 	
 @app.route('/')
 def moulinette():
 
 	try:
-		dbcur.execute("CREATE TEMP TABLE departement AS SELECT DISTINCT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM test")
 		dbcur.execute("SELECT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM departement ORDER BY random() LIMIT 20")
 		datas = dbcur.fetchall()
 		i = randrange(8)
@@ -109,5 +125,6 @@ def moulinette():
 
 	except Exception as e:
 		print e.message, e.args
+		return ""
 
-app.run(host='0.0.0.0', port=11001)
+app.run(host='0.0.0.0', port=11011)
