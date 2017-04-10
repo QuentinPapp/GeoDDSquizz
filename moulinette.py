@@ -14,9 +14,13 @@ CORS(app)
 modeles = {
 	0 :{
 	"question" : 'Quel est le numéro du département %s ?',
+	#%s = data[modeles[i]['question_index']]
 	"question_index": 3,
+	#l'indice de la colonne ou l'on va chercher le nom_departement dans la BDD
 	"propositions_colonne": "num_departement",
+	#on prépare num_departement pour lancer fonction mauvaises_rep
 	"reponse_index" : 2
+	#
 	},
 	1 :{
 	"question" : 'Quel est le département qui a pour numéro %s ?',
@@ -69,6 +73,7 @@ def mauvaises_rep(colonne, br):
 
 	try:
 		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 3", [br])
+		#SELECT DISTINCT nom_region, random() FROM departement WHERE nom_region <> 'Bretagne' ORDER BY random() LIMIT 3;
 		mauvaises_reponses = dbcur.fetchall()
 		return [str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]), str(mauvaises_reponses[2][0])]
 	
@@ -80,7 +85,6 @@ def check (reponse_user, reponse):
 	try:
 		return reponse_user
 	except Exception as e:
-
 		print e.message, e.args
 	
 @app.route('/')
@@ -95,7 +99,10 @@ def moulinette():
 		for data in datas:
 			moulinette.append({
 				"question": modeles[i]['question'] % (data[modeles[i]['question_index']]),
+				#on pose la question de l'indice i où %s = data[0][3]
 				"propositions": mauvaises_rep(modeles[i]['propositions_colonne'], data[modeles[i]['reponse_index']]),
+				#"propositions" = mauvaises_rep('nom_region', 1) 
+				#on donne le nom de la colonne de la rep qu'on veut et l'indice dans lequel on veut trouver la réponse
 				"reponse": data[modeles[i]['reponse_index']]})
 			i = randrange(8)
 		return json.dumps(moulinette, indent = 4)
