@@ -1,12 +1,15 @@
 import React from 'react';
 
-export default class Layout extends React.Component {
+export default class Reponse extends React.Component {
 
 	render() {
 		return(
 			<article className="common result">
-				<p>Réponse</p>
+				<h3>Réponse</h3>
 				<p>Blabla</p>
+				<section className="button">
+					<input type="submit" value="Suivant"/>
+				</section>
 			</article>
 		);
 	}

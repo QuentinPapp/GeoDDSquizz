@@ -18,7 +18,7 @@ body {
 }
 
 /*questions*/
-form {
+.content {
 	display: flex;
 	flex-direction: column;
 }

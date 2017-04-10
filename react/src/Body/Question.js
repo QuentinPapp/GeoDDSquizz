@@ -1,14 +1,21 @@
 import React from 'react';
+// import ReactDOM from 'react-dom';
 
-export default class Layout extends React.Component {
+
+export default class Question extends React.Component {
 
 	render() {
 		return(
 			<article className="common content">
-				<p>Question</p>
-				<label><input type="radio" name="n"/>Choix 1</label>
-				<label><input type="radio" name="n"/>Choix 2</label>
-				<label><input type="radio" name="n"/>Choix 3</label>
+				<h3>Question</h3>
+				<p>{this.props.ask}</p>
+					<label><input type="radio" name="n"/>{this.props.rep[0]}</label>
+					<label><input type="radio" name="n"/>{this.props.rep[1]}</label>
+					<label><input type="radio" name="n"/>{this.props.rep[2]}</label>
+					<section className="button">
+						<input type="button" value="Valider" onClick={this.props.envoie} />
+					</section>
+
 			</article>
 		);
 	}
