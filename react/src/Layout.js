@@ -18,15 +18,15 @@ export default class Layout extends React.Component {
 			count : 0
 		};
 
-		fetch('http://camillec.dijon.codeur.online/react/hello-world/liste.json')
+		fetch('http://camillec.dijon.codeur.online:11001')
 			.then(res => {
 				return res.json();
 			})
 			.then(res => {
 				this.setState({data : res /*JSON.stringify(res)*/});
 				/*console.log(this.state.data);*/
-				this.setState({question : this.state.data.questions[this.state.count][0].question});
-				this.setState({proposition : this.state.data.questions[this.state.count][0].propositions});
+				this.setState({question : this.state.data[this.state.count].question});
+				this.setState({proposition : this.state.data[this.state.count].propositions});
 
 				this.setState({count : this.state.count + 1});
 			});
@@ -40,8 +40,8 @@ export default class Layout extends React.Component {
 		// for (var i = 0; i < questions; i++) {
 		// }
 		this.setState({count : this.state.count + 1});
-		this.setState({question : this.state.data.questions[this.state.count][0].question});
-		this.setState({proposition : this.state.data.questions[this.state.count][0].propositions});
+		this.setState({question : this.state.data[this.state.count].question});
+		this.setState({proposition : this.state.data[this.state.count].propositions});
 		
 		
 	}
