@@ -2,13 +2,16 @@
 # -*- coding:utf-8 -*-
 
 
-from flask import Flask
+from flask import Flask, session, redirect, url_for, escape, request
 from flask_cors import CORS, cross_origin
 import json
 from random import randrange
 import psycopg2
+import random
+
 
 app = Flask(__name__)
+app.secret_key = 'super secret key'
 CORS(app)
 
 modeles = {
@@ -68,33 +71,16 @@ modeles = {
 
 dbcon = psycopg2.connect('host=vps338664.ovh.net port=5432 dbname=geoquizz user=geodds password=acsdds')
 dbcur = dbcon.cursor()
-
-def mauvaises_rep(colonne, br):
-
-	try:
-		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 3", [br])
-		#SELECT DISTINCT nom_region, random() FROM departement WHERE nom_region <> 'Bretagne' ORDER BY random() LIMIT 3;
-		mauvaises_reponses = dbcur.fetchall()
-		return [str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]), str(mauvaises_reponses[2][0])]
+dbcur.execute("CREATE TEMP TABLE departement AS SELECT DISTINCT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM test")
 	
-	except Exception as e:
-		print e.message, e.args
-
-def check (reponse_user, reponse):
-
-	try:
-		return reponse_user
-	except Exception as e:
-		print e.message, e.args
-	
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def moulinette():
 
 	try:
-		dbcur.execute("CREATE TEMP TABLE departement AS SELECT DISTINCT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM test")
 		dbcur.execute("SELECT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM departement ORDER BY random() LIMIT 20")
 		datas = dbcur.fetchall()
 		i = randrange(8)
+		reponse = []
 		moulinette = []
 		for data in datas:
 			moulinette.append({
@@ -103,11 +89,68 @@ def moulinette():
 				"propositions": mauvaises_rep(modeles[i]['propositions_colonne'], data[modeles[i]['reponse_index']]),
 				#"propositions" = mauvaises_rep('nom_region', 1) 
 				#on donne le nom de la colonne de la rep qu'on veut et l'indice dans lequel on veut trouver la réponse
-				"reponse": data[modeles[i]['reponse_index']]})
+				#"reponse": data[modeles[i]['reponse_index']]
+				})
+			reponse.append(data[modeles[i]['reponse_index']])
 			i = randrange(8)
+		#session['moulinette'] = moulinette
+		session['reponse'] = reponse
 		return json.dumps(moulinette, indent = 4)
+		#return str(session['moulinette'])
+		#return str(session['reponse'])
 
 	except Exception as e:
 		print e.message, e.args
+		return ""
+
+def mauvaises_rep(colonne, br):
+	try:
+		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 2", [br])
+		#SELECT DISTINCT nom_region, random() FROM departement WHERE nom_region <> 'Bretagne' ORDER BY random() LIMIT 3;
+		mauvaises_reponses = dbcur.fetchall()
+		return rand_rep(str(br), str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]))
+	
+	except Exception as e:
+		print e.message, e.args
+		return ""
+
+def rand_rep(br, prop1, prop2):
+	try:
+		# recuperer les 3 propositions dans un tab
+		tab = [br, prop1, prop2]
+		 # melanger le tab
+		random.shuffle(tab)
+		# retourner les propositions
+		return tab
+
+	except Exception as e:
+		print e.message, e.args
+		return ""
+
+@app.route('/check', methods=['POST'])
+def check():
+	try:
+		if request.method == 'POST':
+			reponse_user = request.form['reponse'] #'Bourgogne'
+			indice_question = request.form['question'] #14
+			print session
+
+			#reponse ('reponse',)
+
+			return "try session['reponse'] "
+			# if (reponse_user == str(session['reponse'][indice_question])):
+			# 	return "True"
+			# else:
+			# 	return "False"
+	except Exception as e:
+		print e.message, e.args
+		return "la fct check ne fonctionne pas"
+
+if __name__ == '__main__':
+	app.config['SESSION_TYPE'] = 'filesystem'
+
+	sess.init_app(app)
 
 app.run(host='0.0.0.0', port=11001)
+
+
