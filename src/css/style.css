@@ -1,0 +1,58 @@
+body {
+	background-image: url("../img/floral.jpg");
+	margin: 0;
+	padding-bottom: 0;
+}
+
+nav, h5 {
+	text-align: center;
+}
+
+p {
+	font-size: 15px;
+}
+
+label {
+	margin-bottom: 5%;
+}
+
+#root {
+	margin-top: 11%;
+	background-color: lightblue;
+	font-size: 20px;
+	font-family: monospace;
+	color: #263238;
+}
+
+.result {
+	background-color: grey;
+	justify-content: center !important;
+}
+
+.question {
+	background-color: orange;
+}
+
+.show {
+	align-self: center;
+}
+/*.check {
+	width: 10%;
+}*/
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 45%;
+	border-radius: 10px;
+}
+#main {
+	display: flex;
+	justify-content: space-around;
+}
