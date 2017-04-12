@@ -8,7 +8,10 @@ import json
 from random import randrange
 import psycopg2
 import random
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin
 
 app = Flask(__name__)
 app.secret_key = 'super secret key'
@@ -72,8 +75,46 @@ modeles = {
 dbcon = psycopg2.connect('host=vps338664.ovh.net port=5432 dbname=geoquizz user=geodds password=acsdds')
 dbcur = dbcon.cursor()
 dbcur.execute("CREATE TEMP TABLE departement AS SELECT DISTINCT nom_region,chef_lieu,num_departement,nom_departement,prefecture FROM test")
+<<<<<<< HEAD
 	
 @app.route('/', methods=['GET', 'POST'])
+=======
+
+def mauvaises_rep(colonne, br):
+
+	try:
+		dbcur.execute("SELECT DISTINCT " + colonne + ", random() FROM departement WHERE " + colonne + " <> %s ORDER BY random() LIMIT 2", [br])
+		#SELECT DISTINCT nom_region, random() FROM departement WHERE nom_region <> 'Bretagne' ORDER BY random() LIMIT 3;
+		mauvaises_reponses = dbcur.fetchall()
+		return rand_rep(str(br), str(mauvaises_reponses[0][0]), str(mauvaises_reponses[1][0]))
+	
+	except Exception as e:
+		print e.message, e.args
+		return ""
+
+def rand_rep(br, prop1, prop2):
+
+	try:
+		# recuperer les 3 propositions dans un tab
+		tab = [br, prop1, prop2]
+		 # melanger le tab
+		random.shuffle(tab)
+		# retourner les propositions
+		return tab
+
+	except Exception as e:
+		print e.message, e.args
+		return ""
+
+# def check (reponse_user, reponse):
+
+# 	try:
+# 		return reponse_user 
+# 	except Exception as e:
+# 		print e.message, e.args
+	
+@app.route('/')
+>>>>>>> origin
 def moulinette():
 
 	try:
@@ -126,6 +167,7 @@ def rand_rep(br, prop1, prop2):
 	except Exception as e:
 		print e.message, e.args
 		return ""
+<<<<<<< HEAD
 
 @app.route('/check', methods=['POST'])
 def check():
@@ -154,3 +196,7 @@ if __name__ == '__main__':
 app.run(host='0.0.0.0', port=11001)
 
 
+=======
+
+app.run(host='0.0.0.0', port=11011)
+>>>>>>> origin
