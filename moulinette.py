@@ -23,7 +23,7 @@ modeles = {
 	1 :{
 	"question" : 'Quel est le département qui a pour numéro %s ?',
 	"question_index": 2,
-	"propositions_colonne": "num_departement",
+	"propositions_colonne": "nom_departement",
 	"reponse_index" : 3
 	},
 	2 :{
