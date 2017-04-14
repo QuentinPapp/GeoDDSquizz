@@ -7,7 +7,7 @@ export default class Question extends React.Component {
 		return (
 			<section className="content question">
 				<h5>{this.props.question}</h5>
-				<label><input type="radio" name="choice" value={this.props.propositions[0]} /> {this.props.propositions[0]}</label>
+				<label><input type="radio" name="choice" value={this.props.propositions[0]} defaultChecked /> {this.props.propositions[0]}</label>
 				<label><input type="radio" name="choice" value={this.props.propositions[1]} /> {this.props.propositions[1]}</label>
 				<label><input type="radio" name="choice" value={this.props.propositions[2]} /> {this.props.propositions[2]}</label>
 				<label><input type="radio" name="choice" value="La réponse D" /> D</label>

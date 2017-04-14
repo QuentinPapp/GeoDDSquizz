@@ -8,9 +8,8 @@ export default class Body extends React.Component {
 	render() {
 		return (
 			<section id="main">
+				<p>Score : {this.props.score}</p>
 				<Question checkRep={this.props.checkRep} question={this.props.question} propositions={this.props.propositions} />
-				<p>SCORE</p>
-				<p>{this.props.count}</p>
 				<Resultat reponse={this.props.reponse} />
 			</section>
 		);

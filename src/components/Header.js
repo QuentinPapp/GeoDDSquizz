@@ -1,12 +1,13 @@
 import React from "react";
 
-/*import Title from "./Header/Title";*/
-
 export default class Header extends React.Component {
 	
 	render() {
 		return (
-			<nav> A ROULETTE !!!!!!! </nav>
+			<div>
+				<h5> Geo Quiz </h5>
+				<h5> Venez tester vos connaissances </h5>
+			</div>
 		);
 	}
 }

@@ -2,8 +2,6 @@ import React from "react";
 
 import Header from "./Header";
 import Body from "./Body";
-import Footer from "./Footer";
-
 
 export default class Layout extends React.Component {
 
@@ -13,17 +11,18 @@ export default class Layout extends React.Component {
 		this.state = {
 			data : "",
 			question: "",
-			reponse: "Résultat",
+			reponse: "",
 			propositions: [],
-			indice: Math.floor(Math.random() * 19),
-			count: 0
+			indice: 0,
+			score: 0
 		};
 
 		fetch('http://nabilb.dijon.codeur.online:11001/', {
-		    method: 'POST',
+		    method: 'GET',
+		    credentials: 'include',
 		    headers: {
 		    	'Origin' : 'http://nabilb.dijon.codeur.online:3001/',
-		    	'Access-Control-Request-Method': 'POST',
+		    	/*'Access-Control-Request-Method': 'GET',*/
 		    }
 		})
 		.then((res) => {
@@ -43,39 +42,51 @@ export default class Layout extends React.Component {
 	}
 
 	checkRep() {
-		fetch('http://faridl.dijon.codeur.online:11001/check', {
+
+		var form = new FormData();
+		form.append("question", this.state.indice);
+		form.append("reponse", document.querySelector('input[name="choice"]:checked').value);
+
+		fetch('http://nabilb.dijon.codeur.online:11001/check', {
 		    method: 'POST',
+		    credentials: 'include',
 		    headers: {
 		    	'Origin' : 'http://nabilb.dijon.codeur.online:3001/',
 		    },
-		    body: JSON.stringify({
-		   	question: this.state.indice,
-		    reponse: document.querySelector('input[name="choice"]:checked').value
-		  	})
+		  	body: form
 		})
-		/*.then((res) => {
-			console.log(res);
-			return res.json();
-		})*/
+		.then((res) => {
+			return res.text();
+		})
 		.then((res) => { 
-		  if (res) {
+		  if (res === "True") {
 		  	var ok = document.createElement("img");
 		  	var p1 = document.getElementById("test").firstChild;
 		  	ok.className = "show";
 		  	ok.src = "http://nabilb.dijon.codeur.online/geoquizz/ressources/check.png";
 		  	document.getElementById("test").replaceChild(ok,p1);
 		  	setTimeout(() => {
-		  		this.setState({indice : Math.floor(Math.random() * 19)});
+		  		this.setState({indice : this.state.indice + 1});
 		  		this.setState({question : this.state.data[this.state.indice].question});
 				this.setState({propositions: this.state.data[this.state.indice].propositions});
+				document.getElementById("test").replaceChild(p1,ok);
+				document.querySelector('input').setAttribute("defaultChecked", true);
 		  	}, 2000);
+
+		  	this.setState({score: this.state.score + 1});
 		  }	else {
 		  		var nok = document.createElement("img");
 			  	var p2 = document.getElementById("test").firstChild;
 			  	nok.className = "show";
 			  	nok.src = "http://nabilb.dijon.codeur.online/geoquizz/ressources/croix.png";
-
 			  	document.getElementById("test").replaceChild(nok,p2);
+
+			  	setTimeout(() => {
+		  		this.setState({indice : this.state.indice + 1});
+		  		this.setState({question : this.state.data[this.state.indice].question});
+				this.setState({propositions: this.state.data[this.state.indice].propositions});
+				document.getElementById("test").replaceChild(p2,nok);
+		  	}, 2000);
 		  	}
 		})	
 		.catch(function (error) {  
@@ -87,8 +98,7 @@ export default class Layout extends React.Component {
 		return (
 			<div>
 				<Header />
-				<Body reponse={this.state.reponse} question={this.state.question} propositions={this.state.propositions} checkRep={this.checkRep} count={this.state.count} />
-				<Footer />
+				<Body reponse={this.state.reponse} question={this.state.question} propositions={this.state.propositions} checkRep={this.checkRep} score={this.state.score}/>
 			</div>
 		);
 	}
