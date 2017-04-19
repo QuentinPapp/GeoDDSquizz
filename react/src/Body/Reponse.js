@@ -4,9 +4,10 @@ export default class Reponse extends React.Component {
 
 	render() {
 		return(
-			<article className="common result">
+			<article id="reponse" className="common result">
 				<h3>Réponse</h3>
-				<p>Blabla</p>
+				<p id="answer">{this.props.reponse}</p>
+				 <p>Blabla</p>
 				<section className="button">
 					<input type="submit" value="Suivant"/>
 				</section>

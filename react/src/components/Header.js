@@ -6,7 +6,7 @@ export default class Header extends React.Component {
 	
 	render() {
 		return (
-			<nav> ... </nav>
+			<h1> Géoquiz </h1>
 		);
 	}
 }
