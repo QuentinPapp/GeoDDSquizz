@@ -1,0 +1,20 @@
+#/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+#import os # On importe le module os
+
+from flask import Flask
+
+
+app = Flask(__name__)
+
+@app.route('/nouvelleroute')
+def hello_world():
+    return 'Hello, World!'
+
+app.run(host='0.0.0.0', port=11001)
+
+
+
+
+
