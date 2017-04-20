@@ -132,6 +132,7 @@ def moulinette():
 		print (datas)
 		i = randrange(8)
 		session['reponses'] = []
+		session['score'] = 0
 		moulinette = []
 		for data in datas:
 			moulinette.append({
@@ -148,7 +149,20 @@ def moulinette():
 @app.route('/check', methods = ['POST', 'GET'])
 def check():
 	if request.method == 'POST':
-		return str(str(request.form['reponse']) == str(session['reponses'][int(request.form['question'])]))#boolean = 'True' ou 'False'
+		res = []
+		if str(request.form['reponse']) == str(session['reponses'][int(request.form['question'])]):
+			session['score'] += 1
+			res.append({
+			"resultat": "True",
+			"score": session['score'],
+			})
+			return json.dumps(res, indent= 4)
+		else:
+			res.append({
+			"resultat": "False",
+			"score": session['score'],
+			})
+			return json.dumps(res, indent= 4)
 	else:
 		return "fail"
 
