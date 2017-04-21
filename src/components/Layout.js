@@ -76,7 +76,7 @@ export default class Layout extends React.Component {
 				  	}, 1000);
 			  	} else {
 			  		var end_ok = document.createElement("h3");
-					var txt_ok = document.createTextNode("Partie terminée !!");
+					var txt_ok = document.createTextNode("Partie terminée !! Prochaine partie dans 5 secondes ...");
 
 					end_ok.appendChild(txt_ok);
 
@@ -85,7 +85,7 @@ export default class Layout extends React.Component {
 					document.getElementById("ask").replaceChild(end_ok,q_ok);
 					setTimeout(() => {
 						window.location.reload();
-					}, 4000);
+					}, 5000);
 			  	}
 
 			  	this.setState({score: res[0].score});
@@ -104,7 +104,7 @@ export default class Layout extends React.Component {
 					  	}, 1000);
 				  	} else {
 				  		var end_nok = document.createElement("h3");
-						var txt_nok = document.createTextNode("Partie terminée !!");
+						var txt_nok = document.createTextNode("Partie terminée !! Prochaine partie dans 5 secondes ...");
 
 						end_nok.appendChild(txt_nok);
 
@@ -113,7 +113,7 @@ export default class Layout extends React.Component {
 						document.getElementById("ask").replaceChild(end_nok,q_nok);
 						setTimeout(() => {
 							window.location.reload();
-						}, 4000);
+						}, 5000);
 			  		}	
 			  	}
 			})	
