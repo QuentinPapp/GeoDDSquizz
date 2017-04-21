@@ -23,10 +23,11 @@ body {
 
 label {
 	display: block;
-	text-align: left;
 	margin-top: 5px;
 	color: #455A64;
 	outline: none;
+	width: 500px;
+    text-align: center;
 }
 
 .rep {
@@ -53,10 +54,10 @@ label:hover, .check:hover {
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
 }
 
-label:focus {
+/*label:focus {
 	transform: translateY(5px);
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
-}
+}*/
 
 .check {
 	width: 50%;
@@ -78,4 +79,16 @@ label:focus {
 	display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.ok {
+	transform: translateY(5px);
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
+	background-color: rgba(26,255,55,0.72) !important;
+}
+
+.nok {
+	transform: translateY(5px);
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
+	background-color: rgba(255,26,26,0.72) !important;
 }
