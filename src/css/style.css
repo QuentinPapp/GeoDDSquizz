@@ -54,11 +54,6 @@ label:hover, .check:hover {
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
 }
 
-/*label:focus {
-	transform: translateY(5px);
-	box-shadow: 0px 1px 5px rgba(0,0,0,0.4);
-}*/
-
 .check {
 	width: 50%;
 	font-size: 40px;
