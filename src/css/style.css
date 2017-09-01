@@ -38,7 +38,7 @@ input {
 	width: 100%;
 	font-size: 40px;
 	padding: 5px;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Sigmar One', cursive;
 	border: none;
 	background-color: #0091EA;
 	color: white;
@@ -59,7 +59,7 @@ label:hover, .check:hover {
 	font-size: 40px;
 	margin-top: 10px;
 	padding: 5px;
-	font-family: 'Lato', sans-serif;
+	font-family: 'Sigmar One', cursive;
 	border: none;
 	background-color: rgba(37,76,37,0.92);
 	color: white;

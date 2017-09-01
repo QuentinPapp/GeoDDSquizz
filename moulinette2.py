@@ -95,12 +95,17 @@ def mauvaises_rep(colonne, br):
 		print (e.message, e.args)
 		return "mauvaises_rep ne fonctionne pas"
 
+
 @app.route('/connexion', methods=['POST', 'GET'])
 def connexion():
 
 	try:
 		if request.method == 'POST':
-			user = str(request.form['username'])
+			user = {
+			'identifiant' : str(request.form['username']),
+			'score' : int(0)
+			}
+			session['user'] = {}
 			session['user'] = user
 			return session['user']
 	except:
@@ -132,7 +137,6 @@ def moulinette():
 		print (datas)
 		i = randrange(8)
 		session['reponses'] = []
-		session['score'] = 0
 		moulinette = []
 		for data in datas:
 			moulinette.append({
@@ -146,29 +150,34 @@ def moulinette():
 	except:
 		return ""
 
+# try:
+# 		if request.method == 'POST':
+# 			user = {
+# 			'identifiant' : 'farid',
+# 			'score' : 0
+# 			}
+# 			session['user'] = {}
+# 			session['user'] = user
+# 			return session['user']
+# 	except:
+# 		return "xxx"
+
 @app.route('/check', methods = ['POST', 'GET'])
 def check():
 	if request.method == 'POST':
-		res = []
-		if str(request.form['reponse']) == str(session['reponses'][int(request.form['question'])]):
-			session['score'] += 1
-			res.append({
-			"resultat": "True",
-			"score": session['score'],
-			})
-			return json.dumps(res, indent= 4)
+		boolean = str(str(request.form['reponse']) == str(session['reponses'][int(request.form['question'])]))#boolean = 'True' ou 'False'
+		if boolean == 'True':
+			session['user']['score'] = session['user']['score'] + 1
+			return session['user']
 		else:
-			res.append({
-			"resultat": "False",
-			"score": session['score'],
-			})
-			return json.dumps(res, indent= 4)
-	else:
-		return "fail"
+			return session['user']
+		print(request.form['reponse'])
+		print(str(session['reponses'][int(request.form['question'])]))
+		#return boolean
 
 if __name__ == '__main__':
 	app.debug = True
 	SESSION_TYPE = 'filesystem'
 	
 
-app.run(host='localhost', port=11001)
+app.run(host='0.0.0.0', port=11001)
